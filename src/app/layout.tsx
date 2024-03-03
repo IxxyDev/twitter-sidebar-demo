@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import {SidebarDesktop} from "@/components/sidebar-desktop";
+import {Bell, Bookmark, Home, List, Mail, MoreHorizontal, User, Users} from "lucide-react";
+import {SidebarButton} from "@/components/sidebar-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +18,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="dark">
+      <body className={inter.className}>
+        <SidebarDesktop sidebarItems={{
+          links: [
+            { label: 'Home', href: '/', icon: Home },
+            { label: 'Notifications', href: '/item/notifications', icon: Bell },
+            { label: 'Messages', href: '/item/messages', icon: Mail },
+            { label: 'Lists', href: '/item/lists', icon: List },
+            { label: 'Bookmarks', href: '/item/bookmarks', icon: Bookmark },
+            { label: 'Communities', href: '/item/profile', icon: Users },
+            { label: 'Profile', href: '/item/profile', icon: User },
+          ],
+            extras: (
+              <div className='flex flex-col gap-2'>
+                <SidebarButton icon={MoreHorizontal} className='w-full'>
+                  More
+                </SidebarButton>
+                <SidebarButton className='w-full justify-center text-white' variant='default'>Tweet</SidebarButton>
+              </div>
+          )
+        }} />
+        <main className='ml-[300px] mt-3'>{children}</main>
+      </body>
     </html>
   );
 }
